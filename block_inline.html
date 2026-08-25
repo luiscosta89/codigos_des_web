@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Elementos Block e Inline</title>
+
+    <style>
+        /* Elementos Block */
+        h1, p, .block-box {
+            border: 2px solid black;
+            padding: 15px;
+            margin: 10px 0;
+            width: 300px;
+        }
+
+        <!--.block-box {
+            width: 300px;
+        }-->
+
+        /* Elementos Inline */
+        a, span, img {
+            border: 2px solid black;
+            padding: 5px;
+            margin: 10px;
+        }
+
+        img {
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>&lt;h1&gt; é um elemento de block</h1>
+
+    <p>&lt;p&gt; também é um elemento de block.</p>
+
+    <div class="block-box">
+        &lt;div&gt; é outro elemento de block.
+    </div>
+
+    <hr>
+
+    <p>
+       Esse texto aparece junto com um
+        <a href="#">&lt;a&gt;</a>,
+        um <span style="color:blue;font-weight:bold">span de cor azul</span>,
+        e uma imagem
+        <img src="https://shorturl.at/gQNhr" alt="Imagem de Exemplo">
+    </p>
+
+</body>
+</html>
