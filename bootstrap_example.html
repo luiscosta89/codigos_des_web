@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Exemplo didático da Aula 6 de Desenvolvimento Web: Bootstrap aplicado a um e-commerce responsivo.">
+  <title>Aula 6 — Bootstrap | TechStore</title>
+
+  <!-- Bootstrap primeiro -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+  <!-- CSS próprio depois do Bootstrap -->
+  <style>
+    :root {
+      --bs-primary: #7952b3;
+      --bs-primary-rgb: 121, 82, 179;
+      --bs-link-color: #68439f;
+      --bs-link-hover-color: #52327f;
+      --aula-teal: #23a6a6;
+      --aula-orange: #e98b2a;
+    }
+
+    html { scroll-padding-top: 5.5rem; }
+    body { color: #202124; background: #f7f8fa; }
+
+    .navbar-brand-mark {
+      display: inline-grid;
+      width: 2.25rem;
+      height: 2.25rem;
+      place-items: center;
+      border-radius: .55rem;
+      background: var(--bs-primary);
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .hero-aula {
+      background: #fff;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .hero-kicker {
+      color: var(--bs-primary);
+      font-size: .8rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .accent-rule {
+      width: 5rem;
+      height: .25rem;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--aula-teal) 0 55%, var(--aula-orange) 55%);
+    }
+
+    .produto-card {
+      overflow: hidden;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .produto-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 .75rem 1.5rem rgba(32, 33, 36, .1);
+    }
+
+    .produto-card:focus-within {
+      outline: 3px solid rgba(var(--bs-primary-rgb), .28);
+      outline-offset: 2px;
+    }
+
+    .produto-card img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #eef0f3;
+    }
+
+    .preco { color: var(--bs-primary); }
+    .sticky-cart { top: 5.6rem; }
+
+    .quantity-control .btn,
+    .quantity-control output {
+      min-width: 2.5rem;
+      min-height: 2.5rem;
+    }
+
+    .quantity-control output {
+      display: inline-grid;
+      place-items: center;
+      border-block: 1px solid #dee2e6;
+      background: #fff;
+    }
+
+    .demo-label {
+      display: inline-block;
+      padding: .2rem .5rem;
+      border: 1px solid #d9dee3;
+      border-radius: .35rem;
+      background: #f4f6f8;
+      color: #5f6368;
+      font: 700 .72rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .section-heading { max-width: 48rem; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .produto-card { transition: none; }
+    }
+
+    @media print {
+      .navbar, .toast-container, .modal, .btn, #checkout { display: none !important; }
+      body { background: #fff; }
+      .produto-card { break-inside: avoid; box-shadow: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR + COLLAPSE: slides 24 e 25 -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" aria-label="Navegação principal">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#inicio">
+        <span class="navbar-brand-mark" aria-hidden="true">B</span>
+        <span>TechStore</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir navegação">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="#produtos">Produtos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#checkout">Checkout</a></li>
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2" href="#carrinho">
+              Carrinho
+              <span id="cartBadge" class="badge rounded-pill text-bg-primary" aria-label="0 itens no carrinho">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header id="inicio" class="hero-aula py-5">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-12 col-lg-8">
+          <p class="hero-kicker mb-2">GERPN0417 · Desenvolvimento para Web</p>
+          <div class="accent-rule mb-3" aria-hidden="true"></div>
+          <h1 class="display-5 fw-bold text-wrap mb-3">Bootstrap aplicado ao e-commerce</h1>
+          <p class="lead text-secondary mb-0">Um exemplo integrado de containers, grid, breakpoints, utilitários, cards, formulários e componentes interativos.</p>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div class="alert alert-primary mb-0" role="note">
+            <strong>Teste responsivo:</strong> visualize a página em 375 px, 800 px e 1200 px.
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTAINER-FLUID: slide 8 -->
+  <section class="container-fluid bg-primary text-white py-3">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+      <strong>Oferta da aula: frete grátis acima de R$ 299</strong>
+      <span class="small">Faixa externa: <code class="text-white">.container-fluid</code> · conteúdo: <code class="text-white">.container</code></span>
+    </div>
+  </section>
+
+  <main class="container py-5">
+    <div class="row g-4 align-items-start">
+      <!-- GRID: slides 9 a 13 -->
+      <section id="produtos" class="col-12 col-lg-8" aria-labelledby="tituloProdutos">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+          <div class="section-heading">
+            <span class="demo-label mb-2">.col-12 .col-lg-8</span>
+            <h2 id="tituloProdutos" class="h3 mb-1">Produtos</h2>
+            <p class="text-secondary mb-0">Os cards mudam de 1 para 2 e depois 3 colunas conforme o espaço.</p>
+          </div>
+
+          <div class="d-flex gap-2">
+            <div>
+              <label for="filtroCategoria" class="form-label small mb-1">Categoria</label>
+              <select id="filtroCategoria" class="form-select" aria-label="Filtrar produtos por categoria">
+                <option value="todos">Todas</option>
+                <option value="perifericos">Periféricos</option>
+                <option value="audio">Áudio</option>
+                <option value="video">Vídeo</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div id="productGrid" class="row g-3" aria-live="polite"></div>
+      </section>
+
+      <!-- TABLE-RESPONSIVE: slide 19 -->
+      <aside id="carrinho" class="col-12 col-lg-4" aria-labelledby="tituloCarrinho">
+        <div class="card shadow-sm sticky-lg-top sticky-cart">
+          <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+            <div>
+              <span class="demo-label mb-2">.col-12 .col-lg-4</span>
+              <h2 id="tituloCarrinho" class="h4 mb-0">Carrinho</h2>
+            </div>
+            <span id="cartHeaderBadge" class="badge text-bg-secondary">vazio</span>
+          </div>
+
+          <div class="card-body">
+            <div id="emptyCart" class="alert alert-secondary mb-3" role="status">Adicione um produto para começar.</div>
+
+            <div id="cartContent" class="d-none">
+              <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                  <caption class="visually-hidden">Itens adicionados ao carrinho</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Produto</th>
+                      <th scope="col" class="text-center">Qtd.</th>
+                      <th scope="col" class="text-end">Subtotal</th>
+                      <th scope="col"><span class="visually-hidden">Ações</span></th>
+                    </tr>
+                  </thead>
+                  <tbody id="cartRows"></tbody>
+                </table>
+              </div>
+
+              <div class="d-flex justify-content-between border-top pt-3 mb-3">
+                <strong>Total</strong>
+                <strong id="cartTotal" class="preco">R$ 0,00</strong>
+              </div>
+
+              <a href="#checkout" class="btn btn-primary w-100">Ir para checkout</a>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- FORMULÁRIO + VALIDAÇÃO: slides 21 e 22 -->
+    <section id="checkout" class="py-5 mt-4" aria-labelledby="tituloCheckout">
+      <div class="row g-4 align-items-start">
+        <div class="col-12 col-lg-5">
+          <span class="demo-label mb-2">.form-control · .is-invalid · .form-text</span>
+          <h2 id="tituloCheckout" class="h3">Finalizar pedido</h2>
+          <p class="text-secondary">O HTML define restrições, o JavaScript decide e o Bootstrap apresenta o estado visual.</p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-transparent px-0">Label associado ao campo</li>
+            <li class="list-group-item bg-transparent px-0">Tipo de entrada adequado</li>
+            <li class="list-group-item bg-transparent px-0">Feedback textual além da cor</li>
+          </ul>
+        </div>
+
+        <div class="col-12 col-lg-7">
+          <form id="checkoutForm" class="card shadow-sm needs-validation" novalidate>
+            <div class="card-body p-4">
+              <div class="row g-3">
+                <div class="col-12 col-md-6">
+                  <label for="nome" class="form-label">Nome completo</label>
+                  <input id="nome" name="nome" class="form-control" autocomplete="name" required minlength="3">
+                  <div class="invalid-feedback">Informe seu nome completo.</div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label for="email" class="form-label">E-mail</label>
+                  <input id="email" name="email" type="email" class="form-control" autocomplete="email" aria-describedby="ajudaEmail" required>
+                  <div id="ajudaEmail" class="form-text">Enviaremos o comprovante para este endereço.</div>
+                  <div class="invalid-feedback">Informe um e-mail válido.</div>
+                </div>
+
+                <div class="col-12 col-md-8">
+                  <label for="endereco" class="form-label">Endereço</label>
+                  <input id="endereco" name="endereco" class="form-control" autocomplete="street-address" required>
+                  <div class="invalid-feedback">Informe o endereço de entrega.</div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                  <label for="cep" class="form-label">CEP</label>
+                  <input id="cep" name="cep" class="form-control" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}-?[0-9]{3}" placeholder="00000-000" required>
+                  <div class="invalid-feedback">Use o formato 00000-000.</div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-check">
+                    <input id="termos" class="form-check-input" type="checkbox" required>
+                    <label class="form-check-label" for="termos">Revisei os itens e o endereço.</label>
+                    <div class="invalid-feedback">Confirme a revisão antes de continuar.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer bg-white d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 p-4">
+              <small class="text-secondary">Demonstração didática — nenhum pagamento será processado.</small>
+              <button class="btn btn-primary" type="submit">Confirmar pedido</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-top bg-white py-4">
+    <div class="container d-flex flex-column flex-md-row justify-content-between gap-2 small text-secondary">
+      <span>Aula 6 — Bootstrap</span>
+      <span>Prof. Luís Antônio Costa · Desenvolvimento para Web</span>
+    </div>
+  </footer>
+
+  <!-- MODAL: slide 26 -->
+  <div class="modal fade" id="confirmRemoveModal" tabindex="-1" aria-labelledby="confirmRemoveTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="confirmRemoveTitle">Remover item?</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-0"><strong id="removeProductName"></strong> será removido do carrinho.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button id="confirmRemoveButton" type="button" class="btn btn-danger">Remover</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST: slide 27 -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="feedbackToast" class="toast" role="status" aria-live="polite" aria-atomic="true">
+      <div class="toast-header">
+        <span class="rounded me-2 bg-primary" style="width: 1rem; height: 1rem" aria-hidden="true"></span>
+        <strong class="me-auto">TechStore</strong>
+        <small>agora</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fechar"></button>
+      </div>
+      <div id="toastMessage" class="toast-body">Produto adicionado ao carrinho.</div>
+    </div>
+  </div>
+
+  <!-- Bootstrap bundle: inclui Popper para componentes interativos -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+  <script>
+    // Dados e funções retomados das aulas de JavaScript.
+    const produtos = [
+      { id: 1, nome: 'Teclado Mecânico', preco: 199.90, categoria: 'perifericos', resumo: 'Switches táteis e iluminação ajustável.', cor: '#7952b3' },
+      { id: 2, nome: 'Mouse sem Fio', preco: 89.90, categoria: 'perifericos', resumo: 'Conexão estável e formato ambidestro.', cor: '#23a6a6' },
+      { id: 3, nome: 'Headset USB', preco: 249.90, categoria: 'audio', resumo: 'Microfone removível e controle de volume.', cor: '#e98b2a' },
+      { id: 4, nome: 'Webcam Full HD', preco: 319.90, categoria: 'video', resumo: 'Vídeo 1080p e tampa de privacidade.', cor: '#0d6efd' },
+      { id: 5, nome: 'Caixa de Som', preco: 159.90, categoria: 'audio', resumo: 'Som estéreo compacto para a mesa.', cor: '#198754' },
+      { id: 6, nome: 'Monitor 24”', preco: 899.90, categoria: 'video', resumo: 'Painel IPS, resolução Full HD.', cor: '#6f42c1' }
+    ];
+
+    const carrinho = new Map();
+    let pendingRemoveId = null;
+
+    const productGrid = document.querySelector('#productGrid');
+    const cartRows = document.querySelector('#cartRows');
+    const cartBadge = document.querySelector('#cartBadge');
+    const cartHeaderBadge = document.querySelector('#cartHeaderBadge');
+    const cartTotal = document.querySelector('#cartTotal');
+    const emptyCart = document.querySelector('#emptyCart');
+    const cartContent = document.querySelector('#cartContent');
+    const filtroCategoria = document.querySelector('#filtroCategoria');
+    const toastElement = document.querySelector('#feedbackToast');
+    const feedbackToast = bootstrap.Toast.getOrCreateInstance(toastElement, { delay: 2600 });
+    const removeModalElement = document.querySelector('#confirmRemoveModal');
+    const removeModal = bootstrap.Modal.getOrCreateInstance(removeModalElement);
+
+    const dinheiro = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    });
+
+    function escapeXml(texto) {
+      return texto.replace(/[<>&'\"]/g, caractere => ({
+        '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;'
+      })[caractere]);
+    }
+
+    // Gera uma imagem local simples para manter o arquivo portátil.
+    function imagemProduto(produto) {
+      const nome = escapeXml(produto.nome);
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+        <rect width="960" height="540" fill="#f1f3f5"/>
+        <rect x="80" y="80" width="800" height="380" rx="28" fill="${produto.cor}" opacity=".12"/>
+        <circle cx="480" cy="220" r="78" fill="${produto.cor}"/>
+        <text x="480" y="245" text-anchor="middle" font-family="Arial, sans-serif" font-size="72" font-weight="700" fill="white">${nome.charAt(0)}</text>
+        <text x="480" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#202124">${nome}</text>
+      </svg>`;
+      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    }
+
+    function renderizarProdutos(lista = produtos) {
+      if (!lista.length) {
+        productGrid.innerHTML = '<div class="col-12"><div class="alert alert-warning">Nenhum produto encontrado nesta categoria.</div></div>';
+        return;
+      }
+
+      productGrid.innerHTML = lista.map(produto => `
+        <div class="col-12 col-md-6 col-xl-4">
+          <article class="card produto-card h-100">
+            <img src="${imagemProduto(produto)}" class="card-img-top img-fluid" alt="Representação visual de ${produto.nome}">
+            <div class="card-body d-flex flex-column">
+              <span class="badge text-bg-light border align-self-start mb-2">${produto.categoria}</span>
+              <h3 class="card-title h5">${produto.nome}</h3>
+              <p class="card-text text-secondary small">${produto.resumo}</p>
+              <p class="preco fw-bold fs-5 mt-auto">${dinheiro.format(produto.preco)}</p>
+              <button class="btn btn-primary w-100" type="button" data-action="add" data-product-id="${produto.id}">
+                Adicionar
+              </button>
+            </div>
+          </article>
+        </div>
+      `).join('');
+    }
+
+    function quantidadeTotal() {
+      return [...carrinho.values()].reduce((total, item) => total + item.quantidade, 0);
+    }
+
+    function valorTotal() {
+      return [...carrinho.values()].reduce((total, item) => total + item.preco * item.quantidade, 0);
+    }
+
+    function atualizarCarrinho() {
+      const itens = [...carrinho.values()];
+      const quantidade = quantidadeTotal();
+
+      cartBadge.textContent = quantidade;
+      cartBadge.setAttribute('aria-label', `${quantidade} ${quantidade === 1 ? 'item' : 'itens'} no carrinho`);
+      cartHeaderBadge.textContent = quantidade ? `${quantidade} ${quantidade === 1 ? 'item' : 'itens'}` : 'vazio';
+      cartHeaderBadge.className = `badge ${quantidade ? 'text-bg-primary' : 'text-bg-secondary'}`;
+      emptyCart.classList.toggle('d-none', quantidade > 0);
+      cartContent.classList.toggle('d-none', quantidade === 0);
+
+      cartRows.innerHTML = itens.map(item => `
+        <tr>
+          <th scope="row" class="fw-normal">${item.nome}</th>
+          <td>
+            <div class="btn-group btn-group-sm quantity-control" role="group" aria-label="Quantidade de ${item.nome}">
+              <button class="btn btn-outline-secondary" type="button" data-action="decrease" data-product-id="${item.id}" aria-label="Diminuir quantidade de ${item.nome}">−</button>
+              <output aria-label="Quantidade atual">${item.quantidade}</output>
+              <button class="btn btn-outline-secondary" type="button" data-action="increase" data-product-id="${item.id}" aria-label="Aumentar quantidade de ${item.nome}">+</button>
+            </div>
+          </td>
+          <td class="text-end text-nowrap">${dinheiro.format(item.preco * item.quantidade)}</td>
+          <td class="text-end">
+            <button class="btn btn-sm btn-outline-danger" type="button" data-action="ask-remove" data-product-id="${item.id}" aria-label="Remover ${item.nome}">×</button>
+          </td>
+        </tr>
+      `).join('');
+
+      cartTotal.textContent = dinheiro.format(valorTotal());
+    }
+
+    function mostrarToast(mensagem) {
+      document.querySelector('#toastMessage').textContent = mensagem;
+      feedbackToast.show();
+    }
+
+    function adicionarProduto(id) {
+      const produto = produtos.find(item => item.id === id);
+      const atual = carrinho.get(id);
+      carrinho.set(id, { ...produto, quantidade: atual ? atual.quantidade + 1 : 1 });
+      atualizarCarrinho();
+      mostrarToast(`${produto.nome} adicionado ao carrinho.`);
+    }
+
+    document.addEventListener('click', event => {
+      const botao = event.target.closest('[data-action]');
+      if (!botao) return;
+
+      const id = Number(botao.dataset.productId);
+      const action = botao.dataset.action;
+
+      if (action === 'add') adicionarProduto(id);
+
+      if (action === 'increase' && carrinho.has(id)) {
+        carrinho.get(id).quantidade += 1;
+        atualizarCarrinho();
+      }
+
+      if (action === 'decrease' && carrinho.has(id)) {
+        const item = carrinho.get(id);
+        item.quantidade -= 1;
+        if (item.quantidade <= 0) carrinho.delete(id);
+        atualizarCarrinho();
+      }
+
+      if (action === 'ask-remove' && carrinho.has(id)) {
+        pendingRemoveId = id;
+        document.querySelector('#removeProductName').textContent = carrinho.get(id).nome;
+        removeModal.show();
+      }
+    });
+
+    document.querySelector('#confirmRemoveButton').addEventListener('click', () => {
+      if (pendingRemoveId !== null && carrinho.has(pendingRemoveId)) {
+        const nome = carrinho.get(pendingRemoveId).nome;
+        carrinho.delete(pendingRemoveId);
+        atualizarCarrinho();
+        removeModal.hide();
+        mostrarToast(`${nome} removido do carrinho.`);
+      }
+      pendingRemoveId = null;
+    });
+
+    filtroCategoria.addEventListener('change', event => {
+      const categoria = event.target.value;
+      const filtrados = categoria === 'todos'
+        ? produtos
+        : produtos.filter(produto => produto.categoria === categoria);
+      renderizarProdutos(filtrados);
+    });
+
+    document.querySelector('#checkoutForm').addEventListener('submit', event => {
+      const form = event.currentTarget;
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (!quantidadeTotal()) {
+        mostrarToast('Adicione pelo menos um produto antes de finalizar.');
+        document.querySelector('#carrinho').scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+
+      form.classList.add('was-validated');
+      if (form.checkValidity()) {
+        mostrarToast('Pedido validado! Demonstração concluída.');
+      }
+    });
+
+    renderizarProdutos();
+    atualizarCarrinho();
+  </script>
+</body>
+</html>
