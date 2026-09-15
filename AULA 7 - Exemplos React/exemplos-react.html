@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Galeria executável dos exemplos React da Aula 7" />
+    <title>Aula 7 — Todos os exemplos React</title>
+    <style>
+      .fallback-shell{font-family:Lato,"Segoe UI",sans-serif;max-width:1100px;margin:40px auto;padding:24px;color:#20242b}.fallback-hero{padding:28px;border-radius:18px;background:linear-gradient(120deg,#f1ecfa,#e4f7f7)}.fallback-list{display:grid;gap:16px;margin-top:24px}.fallback-example{padding:20px;border:1px solid #d9dee7;border-radius:14px}.fallback-example pre{overflow:auto;padding:14px;border-radius:9px;background:#222936;color:#eaf2ff}.fallback-note{padding:12px;border-left:4px solid #18a6a6;background:#eefafa}
+    </style>
+  </head>
+  <body>
+    <noscript>O conteúdo estático continua disponível abaixo.</noscript>
+    <div id="root">
+      <main class="fallback-shell">
+        <section class="fallback-hero">
+          <small>AULA 7 · INTRODUÇÃO AO REACT</small>
+          <h1>Todos os exemplos React dos slides</h1>
+          <p class="fallback-note">Esta visualização estática evita uma página em branco. Para executar os controles, use <strong>npm run dev</strong> ou abra a versão compilada em <strong>dist/exemplos-react.html</strong>.</p>
+          <p><a href="./dist/exemplos-react.html">Abrir versão interativa compilada</a></p>
+        </section>
+        <section class="fallback-list">
+          <article class="fallback-example"><h2>01 · Componente funcional</h2><pre><code>function ProdutoCard() { return &lt;article&gt;...&lt;/article&gt;; }</code></pre></article>
+          <article class="fallback-example"><h2>02 · JSX e expressões</h2><pre><code>&lt;h2&gt;{produto.nome}&lt;/h2&gt;</code></pre></article>
+          <article class="fallback-example"><h2>03 · Props</h2><pre><code>function ProdutoCard({ nome, preco })</code></pre></article>
+          <article class="fallback-example"><h2>04 · map e key</h2><pre><code>produtos.map(produto =&gt; &lt;ProdutoCard key={produto.id} /&gt;)</code></pre></article>
+          <article class="fallback-example"><h2>05 · Eventos</h2><pre><code>&lt;button onClick={executarAcao}&gt;Adicionar&lt;/button&gt;</code></pre></article>
+          <article class="fallback-example"><h2>06 · Feedback visual e toast</h2><pre><code>{visivel &amp;&amp; &lt;div role="status"&gt;Produto adicionado&lt;/div&gt;}</code></pre></article>
+          <article class="fallback-example"><h2>07 · useState</h2><pre><code>const [contador, setContador] = useState(0)</code></pre></article>
+          <article class="fallback-example"><h2>08 · Estado imutável</h2><pre><code>setCarrinho(atual =&gt; [...atual, produto])</code></pre></article>
+          <article class="fallback-example"><h2>09 · Renderização condicional</h2><pre><code>itens.length === 0 ? &lt;Vazio /&gt; : &lt;Carrinho /&gt;</code></pre></article>
+          <article class="fallback-example"><h2>10 · Formulário controlado</h2><pre><code>&lt;input value={busca} onChange={evento =&gt; setBusca(evento.target.value)} /&gt;</code></pre></article>
+          <article class="fallback-example"><h2>11 · Estado elevado</h2><pre><code>&lt;Resumo quantidade={quantidade} /&gt;</code></pre></article>
+          <article class="fallback-example"><h2>12 · useEffect e fetch</h2><pre><code>useEffect(() =&gt; fetch('./produtos.json'), [])</code></pre></article>
+          <article class="fallback-example"><h2>13 · Bootstrap com className</h2><pre><code>&lt;button className="btn btn-primary"&gt;Adicionar&lt;/button&gt;</code></pre></article>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/src/ExemplosSlides.jsx"></script>
+  </body>
+</html>

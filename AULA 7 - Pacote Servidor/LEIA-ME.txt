@@ -1,0 +1,31 @@
+AULA 7 — PROJETO REACT + PUBLICAÇÃO
+
+A estrutura segue a anatomia apresentada nos slides:
+- public/: arquivos servidos diretamente;
+- src/: código React da aplicação;
+- src/main.jsx: ponto de entrada;
+- src/App.jsx: componente principal;
+- src/index.css: estilos globais;
+- src/components/: componentes da TechStore;
+- index.html: entrada do Vite;
+- package.json: scripts e dependências;
+- dist/: versão compilada para o servidor.
+
+DESENVOLVIMENTO LOCAL
+1. npm install
+2. npm run dev
+3. Abra o endereço localhost mostrado pelo Vite.
+
+PUBLICAÇÃO NO SERVIDOR
+Envie TODO O CONTEÚDO INTERNO de dist/ para a pasta pública do servidor.
+O servidor não executa src/ nem JSX; ele somente entrega o resultado compilado de dist/.
+
+EXEMPLOS DOS SLIDES
+- Durante o desenvolvimento: http://localhost:5173/exemplos-react.html
+- No servidor: exemplos-react.html, depois de enviar o conteúdo de dist/.
+- Por duplo clique: o exemplos-react.html da raiz encaminha para dist/exemplos-react.html.
+
+COMPATIBILIDADE
+- Nenhum arquivo .mjs.
+- Nenhum arquivo de fonte.
+- dist/exemplos-react.html e dist/index.html são autônomos.
