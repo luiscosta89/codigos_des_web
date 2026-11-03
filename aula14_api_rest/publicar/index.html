@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Console da API — Pontos de Coleta</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <main>
+        <header>
+            <p class="tag">Aula 14 · REST + PHP + MariaDB</p>
+            <h1>Console da API de Pontos de Coleta</h1>
+            <p>Monte uma requisição, observe a resposta e compare com a aba <strong>Network</strong> das Ferramentas do Desenvolvedor.</p>
+        </header>
+
+        <section class="painel">
+            <form id="requisicao">
+                <label>Método
+                    <select id="metodo">
+                        <option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option><option>OPTIONS</option>
+                    </select>
+                </label>
+                <label>Rota lógica
+                    <input id="rota" value="/pontos" required>
+                </label>
+                <label>Query adicional (sem ?)
+                    <input id="query" placeholder="tipo=eletronicos&ativo=1&pagina=1">
+                </label>
+                <label>API key (somente escritas)
+                    <input id="api-key" type="password" placeholder="valor configurado em api/config.php" autocomplete="off">
+                </label>
+                <label class="largo">Corpo JSON
+                    <textarea id="corpo" rows="12">{
+  "nome": "Ecoponto da Escola",
+  "tipo": "reciclaveis",
+  "bairro": "Centro",
+  "endereco": "Rua da Aula, 14",
+  "latitude": -23.55052,
+  "longitude": -46.633308,
+  "ativo": true
+}</textarea>
+                </label>
+                <div class="acoes largo">
+                    <button type="submit">Enviar requisição</button>
+                    <button type="button" id="limpar" class="secundario">Limpar resposta</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="resposta" aria-live="polite">
+            <div class="resumo">
+                <span id="metodo-usado">—</span>
+                <strong id="status">Aguardando requisição</strong>
+                <span id="duracao">—</span>
+            </div>
+            <h2>URL</h2><pre id="url">—</pre>
+            <h2>Headers da resposta</h2><pre id="headers">—</pre>
+            <h2>Body</h2><pre id="body">—</pre>
+        </section>
+
+        <aside>
+            <strong>Faça a leitura em duas camadas:</strong> este console ajuda a visualizar o contrato. Em DevTools → Network, selecione <code>index.php?rota=…</code> e confira método, status, headers, payload e resposta reais. Não compartilhe API keys capturadas na aba Network.
+        </aside>
+    </main>
+    <script src="assets/app.js"></script>
+</body>
+</html>
